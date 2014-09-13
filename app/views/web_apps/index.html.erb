@@ -1,0 +1,29 @@
+<h1>Listing web_apps</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Token</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @web_apps.each do |web_app| %>
+      <tr>
+        <td><%= web_app.name %></td>
+        <td><%= web_app.token %></td>
+        <td><%= link_to 'Show', web_app %></td>
+        <td><%= link_to 'Edit', edit_web_app_path(web_app) %></td>
+        <td><%= link_to 'Destroy', web_app, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Web app', new_web_app_path %>
