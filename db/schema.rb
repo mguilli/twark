@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140913215616) do
+ActiveRecord::Schema.define(version: 20140914035928) do
+
+  create_table "events", force: true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.integer  "webapp_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["webapp_id"], name: "index_events_on_webapp_id"
 
   create_table "web_apps", force: true do |t|
     t.string   "name"
