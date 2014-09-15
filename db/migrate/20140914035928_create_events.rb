@@ -3,10 +3,10 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
       t.string :name
       t.string :value
-      t.integer :webapp_id
+      t.integer :web_app_id
 
       t.timestamps
     end
-    add_index :events, :webapp_id
+    add_index :events, :web_app_id
   end
 end

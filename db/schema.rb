@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 20140914035928) do
   create_table "events", force: true do |t|
     t.string   "name"
     t.string   "value"
-    t.integer  "webapp_id"
+    t.integer  "web_app_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "events", ["webapp_id"], name: "index_events_on_webapp_id"
+  add_index "events", ["web_app_id"], name: "index_events_on_web_app_id"
 
   create_table "web_apps", force: true do |t|
     t.string   "name"

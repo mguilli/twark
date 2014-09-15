@@ -1,9 +1,10 @@
 Twark::Application.routes.draw do
   get "testpage/show"
-  resources :web_apps do
-    resources :events, except: [:edit, :update]
-  end
+  resources :web_apps
+  resources :events, except: [:edit, :update]
 
+  match 'events' => "events#index", via: :options
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
