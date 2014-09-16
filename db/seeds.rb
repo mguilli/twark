@@ -18,6 +18,11 @@ WebApp.create(name: "Another Web App", token: token)
   event.update_attribute(:created_at, rand(1.day .. 1.month).ago)
 end
 
+50.times do
+  event = Event.create( name: "page-load", web_app_id: 1 )
+  event.update_attribute(:created_at, rand(1.day .. 6.months).ago)
+end
+
 5.times do
   event = Event.create( name: "test-link", web_app_id: 2 )
   event.update_attribute(:created_at, rand(1.day .. 2.weeks).ago)
