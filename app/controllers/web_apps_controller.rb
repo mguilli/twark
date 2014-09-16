@@ -7,9 +7,44 @@ class WebAppsController < ApplicationController
     @web_apps = WebApp.all
   end
 
+
   # GET /web_apps/1
   # GET /web_apps/1.json
   def show
+    @events = @web_app.events
+
+    # @data = @events.order(:created_at).group("DATE(created_at)").count
+    # @date_range = @data.keys
+    # @value_range = @data.values
+    @data = {}
+
+    # Convert :created_at values to dates and propogate @data hash
+    @events.order(:created_at).group(:created_at).count.each do |key, value|
+      if @data.has_key?(key.to_date)
+        @data[key.to_date] += value
+      else
+        @data[key.to_date] = value
+      end
+    end
+
+    # Use first and last ordered keys from @data hash to generate date range
+    # @date_range = ((@data.keys.last - 1.month) .. @data.keys.last).to_a # Use to limit chart timeline
+    @date_range = (@data.keys.first .. @data.keys.last).to_a
+    @value_range = []
+
+    # Check for events by date and fill value range with event count data
+    @date_range.each do |date|
+      if @data.has_key?(date)
+        @value_range << @data[date]
+      else
+        @value_range << 0
+      end
+    end
+
+    # Convert date range to chart friendly format
+    @date_range.map! do |date|
+      date.strftime("%m-%d-%Y")
+    end
   end
 
   # GET /web_apps/new

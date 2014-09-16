@@ -6,9 +6,10 @@ class EventsController < ApplicationController
   end
 
   def create
-    binding.pry
     @webapp = WebApp.where(token: params[:token]).first
-    @event = @webapp.events.create(params.require(:event).permit(:name, :value))  
+    @event = @webapp.events.build(params.require(:event).permit(:name, :value))
+    @event.value = request.remote_ip
+    @event.save
   end
 
   def destroy

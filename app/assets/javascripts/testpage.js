@@ -15,6 +15,9 @@ var TrackEvent = function(x, val){
 }
 
 $(document).ready(function(){
+
+  TrackEvent("page-load")
+
   $("a.tracked").click(function(){
     alert("test");
     TrackEvent("link-click");
