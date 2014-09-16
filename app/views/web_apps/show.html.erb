@@ -3,22 +3,20 @@
 <p>
   <strong>Name:</strong>
   <%= @web_app.name %>
-</p>
-
-<p>
   <strong>Token:</strong>
   <%= @web_app.token %>
 </p>
 
-
 <%= link_to 'Edit', edit_web_app_path(@web_app) %> |
 <%= link_to 'Back', web_apps_path %>
 
+<% @event_types.each do |key| %>
+  
+<% end %>
 
 <% @chart_array.each do |chart| %>
-  
+
   <% key = chart.keys.first %>
-  
   <p><%= raw chart[key].first %></p>
   <p><%= chart[key].last %></p>
 
@@ -29,27 +27,11 @@
   </p>
 
   <script>
-  $(document).ready(function(){
-    var ctx = document.getElementById("<%= key %>").getContext("2d");
-
-
-    var data = {
-        labels: <%= raw chart[key].first %>,
-        datasets: [{
-          label: "My First dataset",
-          fillColor: "rgba(220,220,220,0.2)",
-          strokeColor: "rgba(69,158,197,1)",
-          pointColor: "rgba(220,220,220,1)",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(220,220,220,1)",
-          data: <%= chart[key].last %>
-        }]
-    };
-
-
-    var myLineChart = new Chart(ctx).Line(data, {pointHitDetectionRadius : 0});
-  })
+    $(document).ready(function(){
+      GenerateChart("<%= key %>", <%= raw chart[key].first %>, <%= chart[key].last %>);
+    })
   </script>
+
   <br />
+
 <% end %>
