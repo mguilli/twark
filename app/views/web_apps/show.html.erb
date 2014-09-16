@@ -10,28 +10,21 @@
 <%= link_to 'Edit', edit_web_app_path(@web_app) %> |
 <%= link_to 'Back', web_apps_path %>
 
-<% @event_types.each do |key| %>
-  
-<% end %>
+<% @event_types.each do |type| %>
 
-<% @chart_array.each do |chart| %>
+  <% chartdata = ChartData(@events, type) %>
+  <p><h3><%= type %></h3></p>
 
-  <% key = chart.keys.first %>
-  <p><%= raw chart[key].first %></p>
-  <p><%= chart[key].last %></p>
-
-  <p><h3><%= key %></h3></p>
-
-  <p>
-    <canvas id= <%= key %> width="600", height="400"></canvas>
-  </p>
+  <p><canvas id= <%= type %> width="600", height="400"></canvas></p>
 
   <script>
     $(document).ready(function(){
-      GenerateChart("<%= key %>", <%= raw chart[key].first %>, <%= chart[key].last %>);
+      GenerateChart("<%= type %>", <%= raw chartdata.first %>, <%= chartdata.last %>);
     })
   </script>
 
-  <br />
+  <p><%= raw chartdata.first %></p>
+  <p><%= raw chartdata.last %></p>
 
+  <br />
 <% end %>

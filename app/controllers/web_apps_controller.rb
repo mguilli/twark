@@ -12,56 +12,8 @@ class WebAppsController < ApplicationController
   # GET /web_apps/1.json
   def show
     @events = @web_app.events
-
     # Find unique event names
     @event_types = @events.pluck(:name).uniq
-
-    @chart_array = []
-
-    @event_types.each do |type|
-      type_hash = {}
-      label_val_array = []
-
-      @data = {}
-
-      # Convert :created_at values to dates and propogate @data hash
-      @events.where(name: type).order(:created_at).group(:created_at).count.each do |key, value|
-        if @data.has_key?(key.to_date)
-          @data[key.to_date] += value
-        else
-          @data[key.to_date] = value
-        end
-      end
-
-      # Use first and last ordered keys from @data hash to generate date range
-      # @date_range = ((@data.keys.last - 1.month) .. @data.keys.last).to_a # Use to limit chart timeline
-      @date_range = (@data.keys.first .. @data.keys.last).to_a
-      @value_range = []
-
-      # Check for events by date and fill value range with event count data
-      @date_range.each do |date|
-        if @data.has_key?(date)
-          @value_range << @data[date]
-        else
-          @value_range << 0
-        end
-      end
-
-      # Convert date range to chart friendly format
-      @date_range.map! do |date|
-        date.strftime("%m-%d-%Y")
-      end
-
-      label_val_array = [@date_range, @value_range]
-      type_hash = {type => label_val_array}
-      @chart_array << type_hash
-
-    end
-
-      # binding.pry
-    # @data = @events.order(:created_at).group("DATE(created_at)").count
-    # @date_range = @data.keys
-    # @value_range = @data.values
   end
 
   # GET /web_apps/new
